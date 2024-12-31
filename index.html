@@ -16,13 +16,18 @@
             color: #fff;
         }
         header {
-            text-align: center;
-            padding: 20px 0;
-            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
             background: #000;
             color: #fff;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
         }
         header::before {
             content: '';
@@ -34,6 +39,7 @@
             background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7));
             animation: movingLights 5s linear infinite;
             z-index: 0;
+            border-bottom: 2px solid #ff6a6a;
         }
         @keyframes movingLights {
             0% { transform: translateX(-50%); }
@@ -42,16 +48,74 @@
         header h1 {
             position: relative;
             margin: 0;
-            font-size: 3rem;
+            font-size: 2rem;
             color: #ffdd57;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
             z-index: 1;
+            flex: 1;
+            text-align: center;
+        }
+        header .glitter-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        header .glitter-stars div {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: gold;
+            border-radius: 50%;
+            box-shadow: 0 0 10px gold;
+            animation: glittering 2s infinite;
+        }
+        @keyframes glittering {
+            0%, 100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+        .header-icons {
+            position: absolute;
+            display: flex;
+            gap: 20px;
+            z-index: 1;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .header-icons.login {
+            left: calc(50% + 400px);
+        }
+        .header-icons.cart {
+            left: calc(50% + 490px);
+        }
+        .header-icons a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .header-icons a:hover {
+            color: #ffdd57;
+        }
+        .header-icons i {
+            font-size: 1.2rem;
         }
         .sections {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 20px 10px;
+            margin: 120px 10px 20px; /* Added top margin to account for fixed header */
         }
         .section {
             width: 90%;
@@ -86,9 +150,30 @@
             }
         }
     </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const starsContainer = document.querySelector(".glitter-stars");
+            for (let i = 0; i < 20; i++) {
+                const star = document.createElement("div");
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                starsContainer.appendChild(star);
+            }
+        });
+    </script>
 </head>
+<body>
     <header>
+        <div class="glitter-stars"></div>
         <h1>TheEventX</h1>
+        <div class="header-icons login">
+            <a href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </div>
+        <div class="header-icons cart">
+            <a href="#"><i class="fas fa-shopping-cart"></i> Cart</a>
+        </div>
     </header>
 
     <main class="sections">
@@ -108,7 +193,7 @@
             <p>Capture every moment with professional photography and videography.</p>
         </div>
         <div class="section">
-            <img src="makeover.png" alt="Makeups">
+            <img src="makeover.png" alt="Makeovers">
             <h2>Makeups</h2>
             <p>Expert makeup artists to make you shine on your special day.</p>
         </div>
